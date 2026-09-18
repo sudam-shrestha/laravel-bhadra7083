@@ -3,6 +3,7 @@
 use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Sudam\SudamSweetAlert\Facades\SudamSweetAlert;
 
 Route::get("/", function () {
     // return "hello world";
@@ -36,7 +37,7 @@ Route::post("/course/store", function (Request $request) {
         "price" => $request->price,
         "description" => $request->description,
     ]);
-
+    SudamSweetAlert::toast('success', 'Created!');
     return redirect("/course/index");
 });
 
@@ -54,6 +55,7 @@ Route::patch("/course/update/{id}", function (Request $request, $id) {
         "description" => $request->description,
     ]);
 
+    SudamSweetAlert::toast('success', 'Updated!');
     return redirect("/course/index");
 });
 
@@ -62,6 +64,6 @@ Route::patch("/course/update/{id}", function (Request $request, $id) {
 Route::delete("/course/delete/{id}", function ($id) {
     // return $request;
     Course::find($id)->delete();
-
+    SudamSweetAlert::toast('success', 'Deleted!');
     return redirect("/course/index");
 });

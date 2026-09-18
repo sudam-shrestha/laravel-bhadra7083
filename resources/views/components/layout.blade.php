@@ -43,6 +43,8 @@
     <!-- Footer -->
     <x-footer />
 
+
+    @include('sudam-sweet-alert::alert')
 </body>
 
 </html>
