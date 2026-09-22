@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string("title"); //255 character limit
             $table->integer("price");
-            $table->text("description");
+            $table->text("description")->nullable();
             $table->timestamps(); //created_at, updated_at
         });
     }

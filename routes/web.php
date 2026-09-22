@@ -1,69 +1,27 @@
 <?php
 
-use App\Models\Course;
-use Illuminate\Http\Request;
+use App\Http\Controllers\AdmissionController;
+use App\Http\Controllers\CourseController;
 use Illuminate\Support\Facades\Route;
-use Sudam\SudamSweetAlert\Facades\SudamSweetAlert;
 
 Route::get("/", function () {
     // return "hello world";
     return view("home");
-});
+})->name("home");
 
 Route::get("/about", function () {
     return view('about');
-});
+})->name('about');
 
 
 // Course Routes
-Route::get("/course/index", function () {
-    $courses = Course::all();
-    // return $courses;
-    return view('course.index', compact("courses"));
-});
-
-Route::get("/course/create", function () {
-    return view('course.create');
-});
-
-// Route::get("/course/edit", function () {
-//     return view('course.edit');
-// });
-
-Route::post("/course/store", function (Request $request) {
-    // return $request;
-    Course::create([
-        "title" => $request->name,
-        "price" => $request->price,
-        "description" => $request->description,
-    ]);
-    SudamSweetAlert::toast('success', 'Created!');
-    return redirect("/course/index");
-});
-
-Route::get("/course/edit/{id}", function ($id) {
-    // return $id;
-    $course = Course::find($id);
-    return view('course.edit', compact('course'));
-});
-
-Route::patch("/course/update/{id}", function (Request $request, $id) {
-    // return $request;
-    Course::find($id)->update([
-        "title" => $request->name,
-        "price" => $request->price,
-        "description" => $request->description,
-    ]);
-
-    SudamSweetAlert::toast('success', 'Updated!');
-    return redirect("/course/index");
-});
+Route::get("/course/index", [CourseController::class, "index"]);
+Route::get("/course/create", [CourseController::class, "create"]);
+Route::post("/course/store", [CourseController::class, "store"]);
+Route::get("/course/edit/{id}", [CourseController::class, "edit"]);
+Route::patch("/course/update/{id}", [CourseController::class, 'update']);
+Route::delete("/course/delete/{id}", [CourseController::class, "delete"])->name('course.delete');
 
 
-
-Route::delete("/course/delete/{id}", function ($id) {
-    // return $request;
-    Course::find($id)->delete();
-    SudamSweetAlert::toast('success', 'Deleted!');
-    return redirect("/course/index");
-});
+// Admission Route
+Route::resource("/admission", AdmissionController::class)->names("admission");
