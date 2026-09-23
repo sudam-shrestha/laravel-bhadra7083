@@ -14,7 +14,8 @@ class AdmissionController extends Controller
      */
     public function index()
     {
-        return view("admission.index");
+        $admissions = Admission::all();
+        return view("admission.index", compact("admissions"));
     }
 
     /**
@@ -36,7 +37,7 @@ class AdmissionController extends Controller
             "name" => $request->name,
             "email" => $request->email,
             "phone" => $request->phone,
-            "course_id"=>$request->course
+            "course_id" => $request->course
         ]);
         SudamSweetAlert::toast('success', 'Created!');
         return redirect()->route('admission.index');
@@ -55,7 +56,9 @@ class AdmissionController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $courses = Course::all();
+        $admission = Admission::find($id);
+        return view('admission.edit', compact("courses", "admission"));
     }
 
     /**
@@ -63,7 +66,14 @@ class AdmissionController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        Admission::find($id)->update([
+            "name" => $request->name,
+            "email" => $request->email,
+            "phone" => $request->phone,
+            "course_id" => $request->course
+        ]);
+        SudamSweetAlert::toast('success', 'Updated!');
+        return redirect()->route('admission.index');
     }
 
     /**
@@ -71,6 +81,8 @@ class AdmissionController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Admission::find($id)->delete();
+        SudamSweetAlert::toast('success', 'Deleted!');
+        return redirect()->route('admission.index');
     }
 }
