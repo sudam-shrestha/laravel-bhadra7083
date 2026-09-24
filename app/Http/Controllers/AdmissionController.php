@@ -14,7 +14,7 @@ class AdmissionController extends Controller
      */
     public function index()
     {
-        $admissions = Admission::all();
+        $admissions = Admission::take(10)->get();
         return view("admission.index", compact("admissions"));
     }
 
