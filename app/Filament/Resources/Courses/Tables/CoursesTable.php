@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Courses\Tables;
 
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
@@ -17,7 +18,8 @@ class CoursesTable
                 TextColumn::make('title')
                     ->searchable(),
                 TextColumn::make('price')
-                    ->money()
+                    ->prefix("Rs.")
+                    ->searchable()
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
@@ -33,6 +35,7 @@ class CoursesTable
             ])
             ->recordActions([
                 EditAction::make(),
+                DeleteAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

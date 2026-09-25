@@ -2,8 +2,10 @@
 
 namespace App\Filament\Resources\Courses\Schemas;
 
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class CourseForm
@@ -12,15 +14,18 @@ class CourseForm
     {
         return $schema
             ->components([
-                TextInput::make('title')
-                    ->required(),
-                TextInput::make('price')
-                    ->required()
-                    ->numeric()
-                    ->prefix('$'),
-                Textarea::make('description')
-                    ->default(null)
-                    ->columnSpanFull(),
+                Section::make("Course Data")
+                    ->schema([
+                        TextInput::make('title')
+                            ->required(),
+                        TextInput::make('price')
+                            ->required()
+                            ->numeric()
+                            ->prefix('Rs.'),
+                        RichEditor::make('description')
+                            ->default(null)
+                            ->columnSpanFull(),
+                    ])->columnSpanFull()->columns(2)
             ]);
     }
 }

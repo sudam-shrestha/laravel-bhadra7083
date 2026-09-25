@@ -21,9 +21,8 @@ class AdmissionsTable
                     ->searchable(),
                 TextColumn::make('phone')
                     ->searchable(),
-                TextColumn::make('course_id')
-                    ->numeric()
-                    ->sortable(),
+                TextColumn::make('course.title')
+                    ->searchable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
